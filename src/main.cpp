@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include <LittleFS.h>
-#include "Server.h"
+#include "server/server_setup.h"
+#include "wifi/wifi_setup.h"
 
 // File system
 
@@ -19,7 +20,7 @@ void loop() {
 // Initialize SPIFFS
 void initFS() {
   if (!LittleFS.begin(true)) {
-    Serial.println("An error has occurred while mounting SPIFFS");
+    Serial.println("An error has occurred while mounting LittleFS");
   }
-  Serial.println("SPIFFS mounted successfully");
+  Serial.println("LittleFS mounted successfully");
 }
