@@ -4,11 +4,11 @@
 
 // File system
 
-void initSPIFFS();
+void initFS();
 
 void setup() {
   Serial.begin(115200);
-  initSPIFFS();
+  initFS();
   setupWiFi();
   setupServer();
 }
@@ -17,7 +17,7 @@ void loop() {
 }
 
 // Initialize SPIFFS
-void initSPIFFS() {
+void initFS() {
   if (!LittleFS.begin(true)) {
     Serial.println("An error has occurred while mounting SPIFFS");
   }
