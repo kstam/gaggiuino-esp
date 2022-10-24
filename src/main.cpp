@@ -1,5 +1,5 @@
 #include <Arduino.h>
-#include <SPIFFS.h>
+#include <LittleFS.h>
 #include "Server.h"
 
 // File system
@@ -18,7 +18,7 @@ void loop() {
 
 // Initialize SPIFFS
 void initSPIFFS() {
-  if (!SPIFFS.begin(true)) {
+  if (!LittleFS.begin(true)) {
     Serial.println("An error has occurred while mounting SPIFFS");
   }
   Serial.println("SPIFFS mounted successfully");

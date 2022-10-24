@@ -4,6 +4,7 @@
 #include <AsyncTCP.h>
 #include <ESPAsyncWebServer.h>
 #include <ArduinoJson.h>
+#include <LittleFS.h>
 #include <Preferences.h>
 #include "esp_task_wdt.h"
 
@@ -112,8 +113,8 @@ void setupServer() {
   server.on("/api/wifi/selected-network", HTTP_PUT, handlePostSelectedNetwork);
   server.on("/api/wifi/selected-network", HTTP_DELETE, handleDeleteSelectedNetwork);
 
-  server.on("/", HTTP_GET, [](AsyncWebServerRequest* request) { request->send(SPIFFS, "/index.html", "text/html"); });
-  server.serveStatic("/", SPIFFS, "/");
+  server.on("/", HTTP_GET, [](AsyncWebServerRequest* request) { request->send(LittleFS, "/index.html", "text/html"); });
+  server.serveStatic("/", LittleFS, "/");
 
   // Start webserver
   server.begin();
