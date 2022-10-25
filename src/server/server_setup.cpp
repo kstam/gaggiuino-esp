@@ -1,5 +1,6 @@
 #include "server_setup.h"
 #include "wifi_api.h"
+#include "websocket.h"
 
 AsyncWebServer server(80);
 
@@ -11,6 +12,7 @@ void setupStaticFiles(AsyncWebServer& server) {
 void setupServer() {
   setupWifiApi(server);
   setupStaticFiles(server);
+  setupWebSocket(server);
   // Start webserver
   server.begin();
 }
