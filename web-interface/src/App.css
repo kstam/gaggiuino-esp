@@ -37,3 +37,26 @@
     transform: rotate(360deg);
   }
 }
+
+.gauges-container {
+  display: grid;
+  padding: 0 8px;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 20px;
+  position: relative;
+}
+
+.gauges-container > div {
+  border: #c8c8c8 2px solid;
+  border-radius: 16px;
+  padding: 8px;
+}
+
+.graph-container {
+  padding: 8px;
+}
+
+.graph-container > div {
+  border: #c8c8c8 2px solid;
+  border-radius: 16px;
+}

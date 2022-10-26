@@ -11,17 +11,20 @@ export default function AvailableNetworks({ onConnected }) {
   const [networksError, setNetworksError] = useState(false);
   const [expandedNetworkId, setExpandedNetworkId] = useState(null);
 
-  useEffect(async () => {
-    if (networks !== null) {
-      return;
-    }
-    try {
-      setNetworksError(false);
-      const networksResponse = await getAvailableNetworks();
-      setNetworks(networksResponse);
-    } catch (e) {
-      setNetworksError(true);
-    }
+  useEffect(() => {
+    const loadNetworks = async () => {
+      if (networks !== null) {
+        return;
+      }
+      try {
+        setNetworksError(false);
+        const networksResponse = await getAvailableNetworks();
+        setNetworks(networksResponse);
+      } catch (e) {
+        setNetworksError(true);
+      }
+    };
+    loadNetworks();
   }, []);
 
   if (networksError) {

@@ -22,6 +22,7 @@
     "browserslist": "^4.18.1",
     "camelcase": "^6.2.1",
     "case-sensitive-paths-webpack-plugin": "^2.4.0",
+    "chart.js": "^3.9.1",
     "css-loader": "^6.5.1",
     "css-minimizer-webpack-plugin": "^3.2.0",
     "dotenv": "^10.0.0",
@@ -45,10 +46,12 @@
     "prop-types": "^15.8.1",
     "react": "^18.1.0",
     "react-app-polyfill": "^3.0.0",
+    "react-chartjs-2": "^4.3.1",
     "react-dev-utils": "^12.0.1",
     "react-dom": "^18.1.0",
     "react-icons": "^4.4.0",
     "react-refresh": "^0.11.0",
+    "react-use-websocket": "^4.2.0",
     "resolve": "^1.20.0",
     "resolve-url-loader": "^4.0.0",
     "sass-loader": "^12.3.0",
@@ -61,6 +64,7 @@
     "webpack": "^5.64.4",
     "webpack-dev-server": "^4.6.0",
     "webpack-manifest-plugin": "^4.0.2",
+    "websocket": "^1.0.34",
     "workbox-webpack-plugin": "^6.4.1"
   },
   "scripts": {
@@ -150,6 +154,6 @@
     "eslint-plugin-react": "^7.30.0",
     "eslint-plugin-react-hooks": "^4.5.0"
   },
-  "proxy": "http://192.168.4.1",
-  "proxy2": "http://192.168.18.44"
+  "proxy2": "http://192.168.4.1",
+  "proxy": "http://192.168.18.44"
 }
