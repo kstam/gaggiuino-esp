@@ -68,28 +68,25 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
 //--------------------------OUTGOING---------------------------//
 //-------------------------------------------------------------//
 void wsSendSensorStatesToClients(
+  long timeInShot,
   float temp,
   float pressure,
-  float pumpFlow,
-  float weightFlow,
-  float weight,
-  float shotWeight
+  float flow,
+  float weight
 ) {
-    const uint8_t size = JSON_OBJECT_SIZE(2) + JSON_OBJECT_SIZE(8);
-    StaticJsonDocument<size> json;
+    DynamicJsonDocument doc(200); // fixed size
+    JsonObject          root = doc.to<JsonObject>();
 
-    json["action"] = "sensor_data_update";
+    root["action"] = "sensor_data_update";
 
-    JsonObject data = json.createNestedObject("data");
+    JsonObject data = root.createNestedObject("data");
+    data["timeInShot"] = timeInShot;
     data["temp"] = temp;
     data["pressure"] = pressure;
-    data["pumpFlow"] = pumpFlow;
-    data["weightFlow"] = weightFlow;
+    data["flow"] = flow;
     data["weight"] = weight;
-    data["shotWeight"] = shotWeight;
 
-    String dataTxt;
-    size_t len = serializeJson(json, dataTxt);
-    AsyncWebSocketMessageBuffer * buffer = ws.makeBuffer(len); //  creates a buffer (len + 1) for you.
-    ws.textAll(buffer);
+    char   buffer[200]; // create temp buffer
+    size_t len = serializeJson(root, buffer);  // serialize to buffer
+    ws.textAll(buffer, len); // send buffer to web socket
 }

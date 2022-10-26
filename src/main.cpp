@@ -11,17 +11,22 @@ void initFS();
 void setup() {
   Serial.begin(115200);
   initFS();
-  setupWiFi();
+  wifiSetup();
   setupServer();
 }
 
 static long nextTimer;
+static long startTime = millis();
 void loop() {
   wsCleanup();
 
   if (millis() > nextTimer) {
-    wsSendSensorStatesToClients(90.f, 0.f, 0.f, 0.f, 0.f, 0.f);
-    nextTimer = millis() + 1000;
+    float rTemp = random(920, 1000) / 10.f;
+    float rFlow = random(30, 40) / 10.f;
+    float rPress = random(50, 120) / 10.f;
+    float rWeight = random(0, 300) / 10.f;
+    wsSendSensorStatesToClients(millis() - startTime, rTemp, rPress, rFlow, rWeight);
+    nextTimer = millis() + 200;
   }
 }
 

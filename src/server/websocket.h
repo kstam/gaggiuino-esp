@@ -8,12 +8,11 @@
 void setupWebSocket(AsyncWebServer& server);
 void wsCleanup();
 void wsSendSensorStatesToClients(
+  long timeInShot,
   float temp,
   float pressure,
-  float pumpFlow,
-  float weightFlow,
-  float weight,
-  float shotWeight
+  float flow,
+  float weight
 );
 
 #endif

@@ -15,11 +15,12 @@ struct WiFiParams_t {
   Preferences preferences;
 };
 
-void setupWiFi();
-bool initWiFi(const unsigned long interval);
-void setupWiFiAccessPoint();
+void wifiSetup();
+bool wifiConnect(String ssid, String pass, const unsigned long timeout = 10000);
+void wifiDisconnect();
+void wiFiApSetup();
+int  wifiNetworkCount();
 
 extern const char* PARAM_INPUT_SSID;
 extern const char* PARAM_INPUT_PASS;
-extern WiFiParams_t wifiParams;
 #endif

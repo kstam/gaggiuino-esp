@@ -13,6 +13,6 @@ void setupServer() {
   setupWifiApi(server);
   setupStaticFiles(server);
   setupWebSocket(server);
-  // Start webserver
+
   server.begin();
 }

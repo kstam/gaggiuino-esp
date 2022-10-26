@@ -21,27 +21,28 @@ void setupWifiApi(AsyncWebServer& server) {
 void handlePostSelectedNetwork(AsyncWebServerRequest* request) {
   Serial.println("Got request to connect to WiFi");
   int params = request->params();
+  String ssid;
+  String pass;
+
   for (int i = 0;i < params;i++) {
     AsyncWebParameter* p = request->getParam(i);
     if (p->isPost()) {
       // HTTP POST ssid value
       if (p->name() == PARAM_INPUT_SSID) {
-        wifiParams.ssid = p->value();
-        Serial.printf("SSID set to: %s\n", wifiParams.ssid.c_str());
-        wifiParams.preferences.putString(PARAM_INPUT_SSID, wifiParams.ssid);
+        ssid = p->value();
+        Serial.printf("SSID set to: %s\n", ssid);
       }
       // HTTP POST pass value
       if (p->name() == PARAM_INPUT_PASS) {
-        wifiParams.pass = p->value();
+        pass = p->value();
         Serial.printf("Password set to: %s\n", "*************");
-        wifiParams.preferences.putString(PARAM_INPUT_PASS, wifiParams.pass);
       }
     }
   }
 
   AsyncResponseStream* response = request->beginResponseStream("application/json");
   DynamicJsonDocument json(256);
-  if (initWiFi(9000)) {
+  if (wifiConnect(ssid, pass, 9000)) {
     json["result"] = "ok";
     json["message"] = "Done. Connected to WiFi.";
     response->setCode(200);
@@ -60,7 +61,7 @@ void handleGetNetworks(AsyncWebServerRequest* request) {
   DynamicJsonDocument json(2048);
   JsonArray networksJson = json.to<JsonArray>();
 
-  for (int i = 0; i < wifiParams.wifiNetworkCount; i++) {
+  for (int i = 0; i < wifiNetworkCount(); i++) {
     JsonObject network = networksJson.createNestedObject();
     network["ssid"] = WiFi.SSID(i);
     network["rssi"] = WiFi.RSSI(i);
@@ -75,11 +76,7 @@ void handleDeleteSelectedNetwork(AsyncWebServerRequest* request) {
   Serial.println("Got request to disconnect connect from WiFi");
   AsyncWebServerResponse* response = request->beginResponse(204);
   request->send(response);
-  if (WiFi.isConnected()) {
-    wifiParams.preferences.clear();
-    WiFi.disconnect();
-    Serial.println("Disconnected from WiFi and cleared saved WiFi.");
-  }
+  wifiDisconnect();
 }
 
 void handleGetWifiStatus(AsyncWebServerRequest* request) {
