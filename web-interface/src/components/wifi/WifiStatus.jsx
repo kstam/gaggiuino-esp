@@ -5,7 +5,6 @@ import { Button } from '@mui/material';
 import PropTypes from 'prop-types';
 import { WifiStatusPropType } from './NetworkPropTypes';
 import { disconnectFromWifi } from '../client/WifiClient';
-import './WifiStatus.css';
 
 export default function WifiStatus({ status, onDisconnected }) {
   function isConnected() {

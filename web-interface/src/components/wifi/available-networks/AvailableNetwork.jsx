@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import SignalWifi3BarIcon from '@mui/icons-material/SignalWifi3Bar';
-import { Alert, Button, TextField } from '@mui/material';
+import {
+  Accordion, AccordionSummary, Alert, Button, TextField, Typography, AccordionDetails, Stack,
+} from '@mui/material';
 import PropTypes from 'prop-types';
 import { Network } from '../NetworkPropTypes';
 import { connectToWifi } from '../../client/WifiClient';
@@ -33,36 +35,37 @@ export default function AvailableNetwork({
   }
 
   return (
-    <div
-      className="NetworkItem"
-      key={`${network.ssid}${network.rssi}`}
-    >
-      <header
-        onClick={() => onClick()}
-        onKeyUp={() => {}}
-        tabIndex="0"
-        role="link"
+    <Accordion expanded={expanded}>
+      <AccordionSummary
+        onClick={onClick}
+        aria-controls="panel1a-content"
+        id="panel1a-header"
       >
         <SignalWifi3BarIcon />
-        <div>{network.ssid}</div>
-      </header>
-      <div className={`Content${expanded ? ' expanded' : ' hidden'}`}>
+        <Typography>{network.ssid}</Typography>
+      </AccordionSummary>
+      <AccordionDetails>
         {connectionError && <Alert severity="error">Failed to connect to WiFi</Alert>}
-        <TextField
-          id="outlined-basic"
-          size="small"
-          type="password"
-          label="Password"
-          variant="outlined"
-          value={password}
-          onChange={(event) => setPassword(event.target.value)}
-        />
-        <Button type="submit" size="large" variant="outlined" onClick={() => handleSubmit()} disabled={connecting}>
-          {connecting && <Loader />}
-          Connect
-        </Button>
-      </div>
-    </div>
+        <form>
+          <Stack spacing={1} direction={{ xs: 'column', sm: 'row' }} alignItems="stretch">
+            <TextField
+              id={`pwd-${network.ssid}`}
+              size="small"
+              type="password"
+              label="Password"
+              variant="outlined"
+              autoComplete="on"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+            />
+            <Button type="submit" size="large" variant="outlined" onClick={() => handleSubmit()} disabled={connecting}>
+              {connecting && <Loader />}
+              Connect
+            </Button>
+          </Stack>
+        </form>
+      </AccordionDetails>
+    </Accordion>
   );
 }
 

@@ -3,6 +3,7 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useState, useEffect } from 'react';
+import { Container, Stack, Typography } from '@mui/material';
 import { Replay } from '@mui/icons-material';
 import WifiStatus from './WifiStatus';
 import { getWifiStatus } from '../client/WifiClient';
@@ -30,21 +31,24 @@ export default function WifiPage() {
   }, []);
 
   return (
-    <div className="WifiPage">
-      <h2 className="Inline-Icon">
-        WiFi status
-        {' '}
-        <a href="#" onClick={() => loadWiFiStatus()}><Replay /></a>
-      </h2>
+    <Container sx={{ mt: '16px' }}>
+      <Typography variant="h4">
+        <Stack direction="row">
+          <span>WiFi status</span>
+          <a href="#" onClick={() => loadWiFiStatus()}><Replay /></a>
+        </Stack>
+      </Typography>
       {wifiStatusLoading && <Loader /> }
       {!wifiStatusLoading && (
-      <WifiStatus
-        status={wifiStatus}
-        onDisconnected={() => loadWiFiStatus()}
-      />
-      )}
-      <h2>Available networks</h2>
+        <WifiStatus
+          status={wifiStatus}
+          onDisconnected={() => loadWiFiStatus()}
+        />
+      ) }
+      <Typography variant="h4" sx={{ mt: '16px' }}>
+        Available networks
+      </Typography>
       <AvailableNetworks onConnected={() => loadWiFiStatus()} />
-    </div>
+    </Container>
   );
 }

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { Alert } from '@mui/material';
 import { getAvailableNetworks } from '../../client/WifiClient';
 import Loader from '../../loader/Loader';
-import './AvailableNetworks.css';
 import AvailableNetwork from './AvailableNetwork';
 
 export default function AvailableNetworks({ onConnected }) {

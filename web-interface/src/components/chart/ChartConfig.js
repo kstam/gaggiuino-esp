@@ -1,43 +1,49 @@
-const ShotChartConfg = {
-  animation: false,
-  responsive: true,
-  interaction: {
-    mode: 'index',
-    intersect: false,
-  },
-  stacked: false,
-  plugins: {
+export default function getShotChartConfig(theme) {
+  return {
+    animation: false,
+    responsive: true,
+    interaction: {
+      mode: 'index',
+      intersect: false,
+    },
+    stacked: false,
+    plugins: {
+      legend: {
+        display: true,
+        position: 'bottom',
+      },
+    },
+    datasets: {
+      line: {
+        pointRadius: 0,
+      },
+    },
     legend: {
-      display: true,
-      position: 'bottom',
+      labels: {
+        fontColor: theme.palette.text.primary,
+      },
     },
-  },
-  datasets: {
-    line: {
-      pointRadius: 0, // disable for all `'line'` datasets
+    scales: {
+      y1: {
+        type: 'linear',
+        display: true,
+        position: 'left',
+        suggestedMin: 0,
+        suggestedMax: 100,
+        ticks: {
+          fontColor: '#fff',
+        },
+      },
+      y2: {
+        type: 'linear',
+        display: true,
+        position: 'right',
+        suggestedMin: 0,
+        suggestedMax: 12,
+        ticks: {
+          fontColor: theme.palette.text.primary,
+        },
+      },
     },
-  },
-  legend: {
-    labels: {
-      fontColor: '#ffffffc8',
-    },
-  },
-  scales: {
-    y1: {
-      type: 'linear',
-      display: true,
-      position: 'left',
-      suggestedMin: 0,
-      suggestedMax: 100,
-    },
-    y2: {
-      type: 'linear',
-      display: true,
-      position: 'right',
-      suggestedMin: 0,
-      suggestedMax: 12,
-    },
-  },
-};
-
-export default ShotChartConfg;
+  };
+}

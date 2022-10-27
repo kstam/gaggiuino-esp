@@ -1,4 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, {
+  useEffect, useRef, useState, useMemo,
+} from 'react';
 import PropTypes from 'prop-types';
 import { Line } from 'react-chartjs-2';
 import {
@@ -12,7 +14,8 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
-import ShotChartConfg from './ChartConfig';
+import { useTheme } from '@mui/material';
+import getShotChartConfig from './ChartConfig';
 
 ChartJS.register(
   CategoryScale,
@@ -81,15 +84,17 @@ function mapToChartData(input) {
 function Chart({ data }) {
   const [chartData, setChartData] = useState(mapToChartData([]));
   const chartRef = useRef(null);
+  const theme = useTheme();
+  const config = useMemo(() => getShotChartConfig(theme), [theme]);
 
   useEffect(() => {
-    setChartData(mapToChartData(data));
+    setChartData(mapToChartData(data, theme));
   }, [data]);
 
   return (
     <Line
       ref={chartRef}
-      options={ShotChartConfg}
+      options={config}
       data={chartData}
     />
   );

@@ -6,6 +6,7 @@ import {
   ArcElement,
   Title,
 } from 'chart.js';
+import { useTheme } from '@mui/material';
 import GaugeCentralTextPlugin from './GaugeCentralTextPlugin';
 
 ChartJS.register(ArcElement, Title, GaugeCentralTextPlugin);
@@ -14,10 +15,11 @@ function GaugeChart({
   value,
   maxValue = 0,
   primaryColor,
-  secondaryColor,
   unit,
   title,
 }) {
+  const theme = useTheme();
+
   const options = {
     cutout: '90%',
     borderWidth: 0,
@@ -40,7 +42,7 @@ function GaugeChart({
       data: [value, Math.max(0, maxValue - value)],
       backgroundColor: [
         primaryColor,
-        secondaryColor,
+        theme.palette.divider,
       ],
     }],
   };
@@ -53,7 +55,6 @@ GaugeChart.propTypes = {
   value: PropTypes.number.isRequired,
   maxValue: PropTypes.number,
   primaryColor: PropTypes.string,
-  secondaryColor: PropTypes.string,
   unit: PropTypes.string,
   title: PropTypes.string,
 };
@@ -61,7 +62,6 @@ GaugeChart.propTypes = {
 GaugeChart.defaultProps = {
   maxValue: 100,
   primaryColor: '#6296C5',
-  secondaryColor: '#c8c8c8',
   unit: '',
   title: '',
 };
